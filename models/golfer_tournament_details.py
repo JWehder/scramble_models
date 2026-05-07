@@ -1,5 +1,5 @@
 from typing import List, Optional, Union
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from datetime import datetime
 from bson import ObjectId
 
@@ -53,6 +53,14 @@ class GolferTournamentDetails(Base):
             result = db.golfertournamentdetails.insert_one(golfer_tournament_details_dict)
             self.id = result.inserted_id
         return self.id
+
+    @field_validator(
+        "Score", "R1", "R2", "R3", "R4", "Today", "Thru", "TotalStrokes",
+        mode="before",
+    )
+    @classmethod
+    def none_to_dash(cls, v):
+        return "-" if v is None else v
 
     @model_validator(mode='before')
     def set_defaults(cls, values):
