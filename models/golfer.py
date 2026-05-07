@@ -37,6 +37,7 @@ class Golfer(Base):
     TurnedPro: Optional[str] = None
     OWGR: Optional[int] = None
     Country: Optional[str] = None
+    EspnId: Optional[str] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
 
